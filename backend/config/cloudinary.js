@@ -14,6 +14,7 @@ const storage = new CloudinaryStorage({
     folder: "smart-notes",
     allowed_formats: ["pdf"],
     resource_type: "raw",
+    format:"pdf",
   },
 });
 

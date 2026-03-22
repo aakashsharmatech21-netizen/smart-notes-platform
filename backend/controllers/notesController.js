@@ -1,4 +1,25 @@
 const Note = require("../models/Note");
+const { GoogleGenAI } = require("@google/genai");
+
+const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+
+// Generate summary using Gemini
+const generateSummary = async (title, description, subject) => {
+  try {
+    const response = await ai.models.generateContent({
+      model: "gemini-2.0-flash-lite",
+      contents: `Generate a short 3-4 line summary for study notes:
+      Title: ${title}
+      Subject: ${subject}
+      Description: ${description}
+      Make it helpful for students.`,
+    });
+    return response.text;
+  } catch (error) {
+    console.error("Gemini error:", error);
+    return "";
+  }
+};
 
 // Upload a note
 const uploadNote = async (req, res) => {
@@ -9,13 +30,18 @@ const uploadNote = async (req, res) => {
       return res.status(400).json({ message: "Please upload a PDF file" });
     }
 
+    // Generate AI summary
+   console.log("Calling Gemini...");
+const summary = await generateSummary(title, description, subject);
+console.log("Summary generated:", summary);
     const note = await Note.create({
       title,
       description,
       subject,
       price,
-      fileUrl: req.file.path,
+      fileUrl: req.file.path + ".pdf",
       seller: req.user._id,
+      summary,
     });
 
     res.status(201).json({

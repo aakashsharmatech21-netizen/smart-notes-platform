@@ -13,7 +13,7 @@ const UploadNote = () => {
   });
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -50,79 +50,152 @@ const UploadNote = () => {
 
   if (!user || user.role !== "seller") {
     return (
-      <div style={{ textAlign: "center", marginTop: "100px" }}>
-        <h2>Only sellers can upload notes</h2>
-        <Link to="/">Go Home</Link>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-center px-4">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-3">
+          Only sellers can upload notes
+        </h2>
+        <Link
+          to="/"
+          className="text-indigo-600 hover:underline font-medium"
+        >
+          Go Home
+        </Link>
       </div>
     );
   }
 
   return (
-    <div style={{ maxWidth: "500px", margin: "50px auto", padding: "30px", border: "1px solid #ddd", borderRadius: "8px" }}>
-      <h2 style={{ textAlign: "center", marginBottom: "20px" }}>Upload Note</h2>
-      <form onSubmit={handleSubmit}>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px", boxSizing: "border-box" }}
-          />
+    <div className="min-h-screen bg-gray-50">
+
+      {/* Navbar (same as Home) */}
+      <nav className="bg-white shadow-sm sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-6 py-4 flex justify-between items-center">
+          <Link to="/" className="text-2xl font-bold text-indigo-600">
+            📚 Smart Notes
+          </Link>
+          <div className="flex items-center gap-3">
+            <span className="text-gray-600 text-sm font-medium">
+              👋 {user.name}
+            </span>
+            <Link to="/dashboard">
+              <button className="px-4 py-2 text-sm bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition">
+                Dashboard
+              </button>
+            </Link>
+            <button
+              onClick={logout}
+              className="px-4 py-2 text-sm bg-red-50 hover:bg-red-100 text-red-600 rounded-lg transition"
+            >
+              Logout
+            </button>
+          </div>
         </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Description</label>
-          <textarea
-            name="description"
-            value={formData.description}
-            onChange={handleChange}
-            required
-            rows={3}
-            style={{ width: "100%", padding: "8px", marginTop: "5px", boxSizing: "border-box" }}
-          />
+      </nav>
+
+      {/* Form Section */}
+      <div className="max-w-2xl mx-auto px-6 py-10">
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8">
+          
+          <h2 className="text-2xl font-bold text-gray-800 mb-6 text-center">
+            Upload New Note
+          </h2>
+
+          <form onSubmit={handleSubmit} className="space-y-5">
+
+            {/* Title */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Title
+              </label>
+              <input
+                type="text"
+                name="title"
+                value={formData.title}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="Enter note title"
+              />
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+                rows={3}
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="Brief description of your notes"
+              />
+            </div>
+
+            {/* Subject */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Subject
+              </label>
+              <input
+                type="text"
+                name="subject"
+                value={formData.subject}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="e.g. Data Structures"
+              />
+            </div>
+
+            {/* Price */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Price (₹)
+              </label>
+              <input
+                type="number"
+                name="price"
+                value={formData.price}
+                onChange={handleChange}
+                required
+                className="w-full px-4 py-2 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+                placeholder="Enter price"
+              />
+            </div>
+
+            {/* File Upload */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                PDF File
+              </label>
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={(e) => setFile(e.target.files[0])}
+                required
+                className="w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 
+                file:rounded-lg file:border-0 
+                file:text-sm file:font-semibold 
+                file:bg-indigo-50 file:text-indigo-600 
+                hover:file:bg-indigo-100"
+              />
+            </div>
+
+            {/* Submit */}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg transition disabled:opacity-70"
+            >
+              {loading ? "Uploading..." : "Upload Note"}
+            </button>
+
+          </form>
         </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Subject</label>
-          <input
-            type="text"
-            name="subject"
-            value={formData.subject}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px", boxSizing: "border-box" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>Price (₹)</label>
-          <input
-            type="number"
-            name="price"
-            value={formData.price}
-            onChange={handleChange}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px", boxSizing: "border-box" }}
-          />
-        </div>
-        <div style={{ marginBottom: "15px" }}>
-          <label>PDF File</label>
-          <input
-            type="file"
-            accept=".pdf"
-            onChange={(e) => setFile(e.target.files[0])}
-            required
-            style={{ width: "100%", padding: "8px", marginTop: "5px", boxSizing: "border-box" }}
-          />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}
-          style={{ width: "100%", padding: "10px", backgroundColor: "#6c63ff", color: "white", border: "none", borderRadius: "5px", cursor: "pointer" }}
-        >
-          {loading ? "Uploading..." : "Upload Note"}
-        </button>
-      </form>
+      </div>
     </div>
   );
 };

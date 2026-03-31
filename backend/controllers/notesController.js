@@ -54,9 +54,43 @@ console.log("Summary generated:", summary);
 };
 
 // Get all notes
+// Get all notes (with search + filter)
+
 const getAllNotes = async (req, res) => {
   try {
-    const notes = await Note.find()
+    const { keyword, subject, maxPrice } = req.query;
+    console.log("SUBJECT RECEIVED:", subject);
+    let filters = [];
+
+    // 🔍 Search (multi-field)
+    if (keyword && keyword.trim() !== "") {
+      filters.push({
+        $or: [
+          { title: { $regex: keyword.trim(), $options: "i" } },
+          { description: { $regex: keyword.trim(), $options: "i" } },
+          { subject: { $regex: keyword.trim(), $options: "i" } },
+        ],
+      });
+    }
+
+    // 📚 Subject filter
+    if (subject && subject.trim() !== "") {
+     filters.push({
+  subject: { $regex: `^${subject.trim()}$`, $options: "i" },
+});
+    }
+
+    // 💰 Price filter
+    if (maxPrice && maxPrice !== "") {
+      filters.push({ price: { $lte: Number(maxPrice) } });
+    }
+
+    // 👉 Combine everything safely
+    const finalQuery = filters.length > 0 ? { $and: filters } : {};
+
+    console.log("FINAL QUERY:", finalQuery); // debug
+
+    const notes = await Note.find(finalQuery)
       .populate("seller", "name email")
       .sort({ createdAt: -1 });
 

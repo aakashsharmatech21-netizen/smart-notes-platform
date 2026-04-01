@@ -22,7 +22,7 @@ const Home = () => {
         const { data } = await API.get("/notes", {
           params: { keyword, subject, maxPrice },
         });
-        setNotes(data.notes);
+        setNotes(data.notes || []);
       } catch (error) {
         console.error(error);
       } finally {

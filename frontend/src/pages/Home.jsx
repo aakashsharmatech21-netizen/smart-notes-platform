@@ -119,25 +119,50 @@ const Home = () => {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {notes.map((note) => (
-              <div key={note._id} className="bg-white rounded-xl shadow-sm hover:shadow-md transition border border-gray-100 flex flex-col">
-                <div className="p-5 flex-1">
-                  <span className="text-xs font-semibold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full">{note.subject}</span>
-                  <h3 className="text-gray-800 font-semibold text-lg mt-3 mb-1 line-clamp-2">{note.title}</h3>
-                  <p className="text-gray-500 text-sm line-clamp-2">{note.description}</p>
-                </div>
-                <div className="px-5 pb-5 flex items-center justify-between">
-                  <div>
-                    <p className="text-2xl font-bold text-indigo-600">₹{note.price}</p>
-                    <p className="text-xs text-gray-400">by {note.seller?.name}</p>
-                  </div>
-                  <Link to={`/notes/${note._id}`}>
-                    <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg">View</button>
-                  </Link>
-                </div>
-              </div>
-            ))}
+  {notes.map((note) => (
+    <div key={note._id} className="bg-white rounded-2xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 flex flex-col group overflow-hidden">
+      
+      {/* Top color banner */}
+      <div className="h-2 bg-gradient-to-r from-indigo-500 to-purple-500" />
+
+      <div className="p-5 flex-1">
+        {/* Subject badge */}
+        <span className="text-xs font-bold text-purple-700 bg-purple-50 border border-purple-200 px-3 py-1 rounded-full">
+          {note.subject}
+        </span>
+
+        {/* Title */}
+        <h3 className="text-gray-800 font-bold text-lg mt-3 mb-1 line-clamp-2 group-hover:text-indigo-600 transition-colors">
+          {note.title}
+        </h3>
+
+        {/* Description */}
+        <p className="text-gray-400 text-sm line-clamp-2">{note.description}</p>
+      </div>
+
+      {/* Bottom section */}
+      <div className="px-5 pb-5 flex items-center justify-between">
+        <div>
+          {/* Price */}
+          <p className="text-2xl font-extrabold text-indigo-600">₹{note.price}</p>
+          {/* Seller avatar + name */}
+          <div className="flex items-center gap-1 mt-1">
+            <div className="w-5 h-5 rounded-full bg-indigo-100 text-indigo-600 text-xs font-bold flex items-center justify-center">
+              {note.seller?.name?.charAt(0).toUpperCase()}
+            </div>
+            <p className="text-xs text-gray-400">{note.seller?.name}</p>
           </div>
+        </div>
+
+        <Link to={`/notes/${note._id}`}>
+          <button className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-sm rounded-xl font-semibold transition-all duration-200 shadow-sm hover:shadow-md">
+            View →
+          </button>
+        </Link>
+      </div>
+    </div>
+  ))}
+</div>
         )}
       </div>
     </div>

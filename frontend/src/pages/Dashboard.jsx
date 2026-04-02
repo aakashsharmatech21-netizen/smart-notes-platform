@@ -8,7 +8,7 @@ const Dashboard = () => {
   const [myNotes, setMyNotes] = useState([]);
   const [purchasedNotes, setPurchasedNotes] = useState([]);
   const [loading, setLoading] = useState(true);
-  const { user, logout } = useAuth();
+  const { user, logout, changeRole } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -85,7 +85,15 @@ const Dashboard = () => {
               You are logged in as a{" "}
               <span className="text-indigo-600 font-semibold capitalize">{user?.role}</span>
             </p>
+            {/* Role Switch Button */}
+            <button
+              onClick={changeRole}
+              className="mt-3 px-4 py-2 text-sm bg-amber-500 hover:bg-amber-600 text-white font-semibold rounded-lg transition"
+            >
+              Switch to {user?.role === "seller" ? "Buyer" : "Seller"} Mode
+            </button>
           </div>
+
           {/* Stats */}
           <div className="hidden sm:flex gap-6 text-center">
             <div>

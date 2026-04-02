@@ -1,4 +1,6 @@
 import { createContext, useContext, useState, useEffect } from "react";
+import api from "../utils/api";
+import toast from "react-hot-toast";
 
 const AuthContext = createContext();
 
@@ -29,8 +31,21 @@ export const AuthProvider = ({ children }) => {
     localStorage.removeItem("user");
   };
 
+  // CHANGE ROLE (buyer ↔ seller)
+  const changeRole = async () => {
+    try {
+      const res = await api.patch("/auth/change-role");
+      const updatedUser = { ...user, role: res.data.role };
+      setUser(updatedUser);
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      toast.success(`Switched to ${res.data.role} mode!`);
+    } catch (err) {
+      toast.error("Failed to switch role. Please try again.");
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading, changeRole }}>
       {children}
     </AuthContext.Provider>
   );

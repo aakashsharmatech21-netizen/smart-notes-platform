@@ -1,9 +1,8 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import api from "../utils/api";
+import api from "../utils/API";
 import toast from "react-hot-toast";
 
 const AuthContext = createContext();
-
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("token") || null);
@@ -34,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   // CHANGE ROLE (buyer ↔ seller)
   const changeRole = async () => {
     try {
-      const res = await api.patch("/auth/change-role");
+      const res = await API.patch("/auth/change-role");
       const updatedUser = { ...user, role: res.data.role };
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));

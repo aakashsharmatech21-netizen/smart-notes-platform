@@ -39,7 +39,7 @@ console.log("Summary generated:", summary);
       description,
       subject,
       price,
-      fileUrl: req.file.path + ".pdf",
+      fileUrl: req.file.path, 
       seller: req.user._id,
       summary,
     });

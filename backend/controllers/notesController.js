@@ -7,7 +7,7 @@ const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 const generateSummary = async (title, description, subject) => {
   try {
     const response = await ai.models.generateContent({
-      model: "gemini-1.5-flash",
+      model: "gemini-2.0-flash",
       contents: `Generate a short 3-4 line summary for study notes:
       Title: ${title}
       Subject: ${subject}

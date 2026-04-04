@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
   // CHANGE ROLE (buyer ↔ seller)
   const changeRole = async () => {
     try {
-      const res = await API.patch("/auth/change-role");
+      const res = await api.patch("/auth/change-role");
       const updatedUser = { ...user, role: res.data.role };
       setUser(updatedUser);
       localStorage.setItem("user", JSON.stringify(updatedUser));

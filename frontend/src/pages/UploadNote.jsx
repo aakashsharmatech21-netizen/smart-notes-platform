@@ -137,12 +137,12 @@ const UploadNote = () => {
                   required
                   className="w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none bg-slate-50"
                 >
-                  <option value="">Select a subject</option>
-                  <option value="Computer Science">Computer Science</option>
+                  <option value="">All Subjects</option>
+                  <option value="Data structures">Data structures</option>
                   <option value="Software Engineering">Software Engineering</option>
-                  <option value="Mathematics">Mathematics</option>
-                  <option value="Physics">Physics</option>
-                  <option value="Chemistry">Chemistry</option>
+                  <option value="Computer Networks">Computer Networks</option>
+                  <option value="AI">AI</option>
+                  <option value="Machine Learning">Machine Learning</option>
                 </select>
               </div>
 

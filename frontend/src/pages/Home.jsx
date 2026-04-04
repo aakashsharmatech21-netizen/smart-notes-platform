@@ -69,13 +69,13 @@ const Home = () => {
       </nav>
 
       {/* Hero */}
-      <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 text-white py-20 px-6 text-center">
-        <span className="inline-block bg-white/10 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-6 tracking-wide uppercase">Smart Education Platform</span>
-        <h1 className="text-5xl font-extrabold mb-4 leading-tight">Find the Best <br/>Study Notes</h1>
-        <p className="text-indigo-200 text-lg mb-8 max-w-xl mx-auto">Buy and sell high-quality notes from students like you. AI-powered summaries included.</p>
+      <div className="bg-gradient-to-br from-indigo-600 via-indigo-700 to-purple-700 text-white py-8 px-6 text-center">
+        <span className="inline-block bg-white/10 text-white text-xs font-semibold px-4 py-1.5 rounded-full mb-4 mt-4 tracking-wide uppercase">Smart Education Platform</span>
+        <h1 className="text-3xl font-extrabold mb-3 leading-tight">Find the Best Study Notes</h1>
+        <p className="text-indigo-200 text-base mb-6 max-w-xl mx-auto">Buy and sell high-quality notes from students like you. AI-powered summaries included.</p>
         {!user && (
           <Link to="/register">
-            <button className="px-8 py-3 bg-white text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 transition shadow-lg text-sm">
+            <button className="px-8 py-3 bg-white text-indigo-700 font-bold rounded-xl hover:bg-indigo-50 transition shadow-lg text-sm mb-4">
               Start for Free →
             </button>
           </Link>
@@ -105,11 +105,11 @@ const Home = () => {
               className="px-4 py-2.5 border border-slate-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
             >
               <option value="">All Subjects</option>
-              <option value="Computer Science">Computer Science</option>
+              <option value="Data structures">Data structures</option>
               <option value="Software Engineering">Software Engineering</option>
-              <option value="Mathematics">Mathematics</option>
-              <option value="Physics">Physics</option>
-              <option value="Chemistry">Chemistry</option>
+              <option value="Computer Networks">Computer Networks</option>
+              <option value="AI">AI</option>
+              <option value="Machine Learning">Machine Learning</option>
             </select>
             <input
               type="number"

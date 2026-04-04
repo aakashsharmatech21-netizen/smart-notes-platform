@@ -22,6 +22,7 @@ const generateSummary = async (title, description, subject) => {
 };
 
 // Upload a note
+// Upload a note
 const uploadNote = async (req, res) => {
   try {
     const { title, description, subject, price } = req.body;
@@ -30,16 +31,22 @@ const uploadNote = async (req, res) => {
       return res.status(400).json({ message: "Please upload a PDF file" });
     }
 
+    // ✅ Validate PDF only
+    if (req.file.mimetype !== "application/pdf") {
+      return res.status(400).json({ message: "Only PDF files are allowed" });
+    }
+
     // Generate AI summary
-   console.log("Calling Gemini...");
-const summary = await generateSummary(title, description, subject);
-console.log("Summary generated:", summary);
+    console.log("Calling Gemini...");
+    const summary = await generateSummary(title, description, subject);
+    console.log("Summary generated:", summary);
+
     const note = await Note.create({
       title,
       description,
       subject,
       price,
-      fileUrl: req.file.path, 
+      fileUrl: req.file.path,
       seller: req.user._id,
       summary,
     });

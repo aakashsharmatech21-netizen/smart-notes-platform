@@ -1,26 +1,37 @@
 const Note = require("../models/Note");
-const { GoogleGenAI } = require("@google/genai");
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
 
-// Generate summary using Gemini
+// Generate summary using Openrouter
 const generateSummary = async (title, description, subject) => {
   try {
-    const response = await ai.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: `Generate a short 3-4 line summary for study notes:
-      Title: ${title}
-      Subject: ${subject}
-      Description: ${description}
-      Make it helpful for students.`,
+    const response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": `Bearer ${process.env.OPENROUTER_API_KEY}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        model: "meta-llama/llama-3.2-3b-instruct:free",
+        messages: [
+          {
+            role: "user",
+            content: `Generate a short 3-4 line summary for study notes:
+            Title: ${title}
+            Subject: ${subject}
+            Description: ${description}
+            Make it helpful for students.`,
+          },
+        ],
+      }),
     });
-    return response.text;
+
+    const data = await response.json();
+    return data.choices[0].message.content;
   } catch (error) {
-    console.error("Gemini error:", error);
-    return "";
+    console.error("OpenRouter error:", error.message);
+    return `These notes cover essential concepts in ${subject}. Ideal for quick revision and exam preparation.`;
   }
 };
-
 // Upload a note
 // Upload a note
 const uploadNote = async (req, res) => {

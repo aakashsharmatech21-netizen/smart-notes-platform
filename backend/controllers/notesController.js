@@ -15,11 +15,10 @@ const generateSummary = async (title, description, subject) => {
         messages: [
           {
             role: "user",
-            content: `Generate a short 3-4 line summary for study notes:
+            content: `You are a helpful study assistant. Generate exactly one 3-4 line summary for these study notes. Do not give multiple options. Do not ask questions. Just write the summary directly.
             Title: ${title}
             Subject: ${subject}
-            Description: ${description}
-            Make it helpful for students.`,
+            Description: ${description}`,
           },
         ],
       }),

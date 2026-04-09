@@ -26,13 +26,13 @@ const generateSummary = async (title, description, subject) => {
     });
 
     const data = await response.json();
+    console.log("OpenRouter raw response:", JSON.stringify(data));
     return data.choices[0].message.content;
   } catch (error) {
     console.error("OpenRouter error:", error.message);
     return `These notes cover essential concepts in ${subject}. Ideal for quick revision and exam preparation.`;
   }
 };
-// Upload a note
 // Upload a note
 const uploadNote = async (req, res) => {
   try {

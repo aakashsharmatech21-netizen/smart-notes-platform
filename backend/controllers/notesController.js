@@ -15,7 +15,7 @@ const generateSummary = async (title, description, subject) => {
         messages: [
           {
             role: "user",
-            content: `You are a helpful study assistant. Generate exactly one 3-4 line summary for these study notes. Do not give multiple options. Do not ask questions. Just write the summary directly.
+            content: `You are a study notes summarizer for college students. Read the following note details and write a specific, informative 3-4 line summary. Mention the actual topics covered. Be specific, not generic. Do not use phrases like "this note covers" or "this unit provides". Just directly describe what students will learn.
             Title: ${title}
             Subject: ${subject}
             Description: ${description}`,

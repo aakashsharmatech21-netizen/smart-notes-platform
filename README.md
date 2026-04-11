@@ -2,7 +2,6 @@
 
 A full-stack MERN notes marketplace where students can **buy and sell study PDFs** — with AI-generated summaries, secure authentication, and cloud storage.
 
-> Built for Hackwarts Hackathon | Theme: Smart Education
 
 **Live Demo:** https://smart-notes-platform.vercel.app
 
